@@ -27,6 +27,13 @@
    (grid-w g)
    (grid-h g)))
 
+(define (grid-valid-indices? g i j)
+  (and
+   (integer? i)
+   (integer? j)
+   (< -1 i (grid-w g))
+   (< -1 j (grid-h g))))
+
 (define (grid-index-at g i j)
   (+ (* j (grid-w g)) i))
 (define (grid-set! g i j v)
@@ -36,3 +43,9 @@
 (define (grid-ref g i j)
   (vector-ref (grid-data g)
               (grid-index-at g i j)))
+
+(define (grid-dump g [elem->string ~a])
+  (for ([j (in-range (grid-h g))])
+    (for ([i (in-range (grid-w g))])
+      (display (elem->string (grid-ref g i j))))
+    (display #\newline)))
